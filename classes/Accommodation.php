@@ -1,13 +1,13 @@
 <?php
-class User {
+class Accommodation {
   private $_db;
 
   public function __construct() {
     $this->_db = Database::getInstance();
   }
 
-  function createUser($values=array(), $type='') {
-    $this->_db->insert('users', $values, $type);
+  function createAccommodation($values=array(), $type='') {
+    $this->_db->insert('accommodations', $values, $type);
     if($this->_db->error()) {
       echo $this->_db->getErrorDescr();
     }else{
@@ -15,8 +15,8 @@ class User {
     }
   }
 
-  function getUsers() {
-    $this->_db->query('select * from users');
+  function getAccommodations() {
+    $this->_db->query('select * from accommodations');
     if($this->_db->error()) {
       echo $this->_db->getErrorDescr();
     }else{
@@ -24,8 +24,8 @@ class User {
     }
   }
 
-  function getUserById($id) {
-    $this->_db->query('select * from users where user_id = ?','d',array(&$id));
+  function getAccomById($id) {
+    $this->_db->query('select * from accommodations where user_id = ?','d',array(&$id));
     if($this->_db->error()) {
       echo $this->_db->getErrorDescr();
     }else{
@@ -36,8 +36,8 @@ class User {
 
   //specify which collumns, which equality condition
   function getUser($which, $type, $cond) {
-    //echo 'select '.implode(', ',$which).' from users where '.key($cond).' = '.$cond[key($cond)];
-    $this->_db->query('select '.implode(', ',$which).' from users where '.key($cond).' = ?',$type,array(&$cond[key($cond)]));
+    //echo 'select '.implode(', ',$which).' from accommodations where '.key($cond).' = '.$cond[key($cond)];
+    $this->_db->query('select '.implode(', ',$which).' from accommodations where '.key($cond).' = ?',$type,array(&$cond[key($cond)]));
     if($this->_db->error()) {
       echo $this->_db->getErrorDescr();
     }else{
@@ -45,8 +45,8 @@ class User {
     }
   }
 
-  function getUserByUsername($user) {
-    $this->_db->query('select * from users where username = ?','s',array(&$user));
+  function getAccomByLocation($location) {
+    $this->_db->query('select * from accommodations where username = ?','s',array(&$location));
     if($this->_db->error()) {
       echo $this->_db->getErrorDescr();
     }else{
