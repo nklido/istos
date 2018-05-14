@@ -2,7 +2,7 @@
 // Singleton design pattern
 // connect to database only once
 // use the same db insance everywhere
-class database{
+class Database{
   private static $_instance = null;
   private $_dbc,
           $_query,
@@ -24,7 +24,7 @@ class database{
 
   public static function getInstance(){
     if(!isset(self::$_instance)){
-      self::$_instance = new database();
+      self::$_instance = new Database();
     }
     return self::$_instance;
   }
@@ -50,22 +50,8 @@ class database{
   INSERT INTO table_name (column1, column2, column3, ...)
                     VALUES (value1, value2, value3, ...);
   */
-  public function insert($table,$cols,$type='',$vals=array()){
-    if($this->tableExists($table)){
-      $insert_query = 'INSERT INTO '.$table.' ('.implode(', ',$cols).')';
-      if(count($vals)){
-          $insert_query .= ' VALUES ('.substr(str_repeat("?,",count($vals)),0,-1).');';
-          $this->_query = $this->_dbc->prepare($insert_query);
-          call_user_func_array(array($this->_query, "bind_param"),array_merge(array($type), $vals));
-      }
 
-      if(!($this->_query->execute())){
-        $this->_error = true;
-      }
-    }
-  }
-
-  public function insert2($table,$vals=array(),$type=''){
+  public function insert($table,$vals=array(),$type=''){
     if($this->tableExists($table)){
       if(count($vals)){
           $insert_query = 'INSERT INTO '.$table.' ('.implode(', ',array_keys($vals)).')';
@@ -81,8 +67,6 @@ class database{
   }
 
 
-
-
   /*Check if a given talbe exists in database*/
   private function tableExists($table){
     $this->_results = $this->_dbc->query("SHOW TABLES LIKE '$table';");
@@ -90,12 +74,20 @@ class database{
   }
 
   public function getFirst(){
-    return $this->_results->fetch_array(MYSQLI_ASSOC);
+    if($this->_count>0)
+      return $this->_results->fetch_array(MYSQLI_ASSOC);
   }
 
   public function results(){
-    return $this->_results;
+    if($this->_count>0)
+      return $this->_results;
   }
+
+  public function getResultArray(){
+    if($this->_count>0)
+      return $this->_results->fetch_all(MYSQLI_ASSOC);
+  }
+
   public function count(){
     return $this->_count;
   }

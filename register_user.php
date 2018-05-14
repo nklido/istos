@@ -41,23 +41,17 @@ if(Input::postDataExist()){
     $last  = escape($_POST['lastname']);
     $mail  = escape($_POST['email']);
 
-    $db = database::getInstance();
-    $db->insert2('users',
-                  array(
+    $usr = new User();
+    $usr->createUser('users',array(
                     'username'=>&$user,
                     'password'=>&$pass,
                     'firstname'=>&$first,
                     'lastname'=>&$last,
                     'email' =>&$mail),'sssss');
-    //$db->insert('users',array('username','password','firstname','lastname','email'),'sssss',array(&$user,&$pass,&$first,&$last,&$mail));
-    if($db->error()){
-      echo $db->getErrorDescr();
-    }else{
-      header('Location:login.php');
-      exit();
-    }
+    header('Location:login.php');
+    exit();
 
-  }else{
+  }else{ //Validation not passed
     foreach($validation->errors() as $error){
       echo "Error : {$error}</br>";
     }
@@ -69,12 +63,13 @@ if(Input::postDataExist()){
 <html lang="el">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="ask2.css" rel="stylesheet" type="text/css">
+	<link href="css/form.css" rel="stylesheet" type="text/css">
+  <link href="css/navigation.css" rel="stylesheet" type="text/css">
 	<title>Registration form</title>
 </head>
 <body>
   <?php include 'navigation.php';?>
-	<div id="registration">
+	<div id="registration" class='form_div'>
 		<h1>Registration</h1>
 		<form action="#" method="POST" id="registration_form">
 

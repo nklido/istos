@@ -63,7 +63,6 @@ class Validation{
       }
     }
     return false;
-
   }
 
   private function addError($error){

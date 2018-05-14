@@ -1,7 +1,9 @@
-#navbar{
-  display:block;
+
+
+#profile_nav body {
+    margin: 0;
 }
-// commeent
+
 #navbar ul {
     list-style-type: none;
     margin: 0;
@@ -16,18 +18,39 @@
 
 #navbar li{
       display:inline;
-      float:left;
+      float:right;
       text-align: center;
   }
 
-#navbar li a{
+#profile_nav ul {
+      float:left;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 15%;
+      background-color: #f1f1f1;
+      position: fixed;
+      height: 100%;
+      overflow: auto;
+  }
+.nav li a{
   display: block;
-  padding: 8px;
+  padding: 13px 16px;
   text-decoration: none;
   color:#666;
 }
 
-#navbar li a:hover {
+.nav li a.active {
+    background-color: #d35454;
+    color: white;
+}
+
+.nav li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.nav li a:hover {
   background-color: #555;
   color: white;
 }

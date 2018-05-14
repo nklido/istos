@@ -1,15 +1,21 @@
-body{
-
+.form_div{
+	width: 20%;
+	margin: 0 auto;
+	border:1px solid #e7e7e7;
+	padding:10px 150px 150px 15px;
 }
 
-#registration{
-	width: 35%;
-	margin: 0 auto
+.form_div form{
+	margin:auto;
+	width:50%;
 }
-
 
 input:focus, textarea:focus{
-	background-color:#eeff9e;
+	background-color:#e7e7e7;
+}
+
+.form_div textarea{
+	background: #cecece;
 }
 
 input:focus::placeholder{
@@ -20,7 +26,7 @@ input:focus::placeholder{
 
 input, select, button[type=submit]{
 	background-color : #cecece ; /*light gray*/
-    border-radius: 30px;
+  border-radius: 30px;
 	width:220px;
 	height:20px;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -55,5 +61,5 @@ label{
 button[type=submit]{
 	height:40px;
 	color:white;
-	background-color:#5391f4;
+	background-color: #d35454;;
 }

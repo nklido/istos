@@ -4,20 +4,21 @@ if(!isset($_SESSION['user'])){
     header("Location:login.php");
 }
 if(Input::postDataExist()){
+
 }
 ?>
 <!DOCTYPE html>
 <html lang="el">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link href='navigation.css' rel="stylesheet" type="text/css">
+  <link href="css/form.css" rel="stylesheet" type="text/css">
+  <link href="css/navigation.css" rel="stylesheet" type="text/css">
 	<title>Register Accommodation</title>
 </head>
 <body>
   <?php include 'navigation.php';?>
-	<div id="accom">
+	<div id="accom" class="form_div">
 		<h1>Register Accommodation</h1>
-    <a href='home.php'>Back to home</a>
 		<form action="#" method="POST" id="accom_form">
 
 			<label  class="required">Title </label>
@@ -27,13 +28,12 @@ if(Input::postDataExist()){
 			<label>Upload an image</label>
       <br/>
 
-
       <label  class="required">Location </label>
 			<input type="text" id="location" name="location" value="<?php echo escape(Input::getPost('location'))?>" required>
       </br>
 
       <label>Description</label>
-      <textarea name="description" id="description" name="description" rows="4" cols="50"><?php echo escape(Input::getPost('description'))?>
+      <textarea name="description" id="description" name="description" rows="4" cols="25"><?php echo escape(Input::getPost('description'))?>
       </textarea>
       </br>
 
@@ -48,6 +48,7 @@ if(Input::postDataExist()){
 			<button type="submit" value ="register_accom">Add accomodation</button>
 		</form>
 	</div>
+
 	<div id="footer">
 		<p>
 		</p>

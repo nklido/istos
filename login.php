@@ -33,12 +33,13 @@ if(Input::postDataExist()){
 <html lang="el">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="ask2.css" rel="stylesheet" type="text/css">
+	<link href="css/form.css" rel="stylesheet" type="text/css">
+  <link href="css/navigation.css" rel="stylesheet" type="text/css">
 	<title>Login</title>
 </head>
 <body>
   <?php include 'navigation.php';?>
-	<div id="login">
+	<div id="login" class="form_div">
 		<h1>Login</h1>
 		<form action="#" method="POST" id="login_form">
 
