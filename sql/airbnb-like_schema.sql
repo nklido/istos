@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 13, 2018 at 03:50 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- Host: localhost
+-- Generation Time: May 14, 2018 at 09:53 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,51 +25,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accommodation`
+-- Table structure for table `accommodations`
 --
 
-CREATE TABLE `accommodation` (
+CREATE TABLE `accommodations` (
   `accom_id` int(11) NOT NULL,
   `title` varchar(50) COLLATE utf8_bin NOT NULL,
   `location` varchar(25) COLLATE utf8_bin NOT NULL,
-  `descr_id` int(11) NOT NULL,
+  `description` text COLLATE utf8_bin,
   `rating` float DEFAULT '0',
   `votes` int(11) DEFAULT '0',
   `checkin` time NOT NULL,
   `checkout` time NOT NULL,
-  `path_to_image` varchar(100) COLLATE utf8_bin NOT NULL
+  `path_to_image` varchar(100) COLLATE utf8_bin NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `accommodations`
+--
+
+INSERT INTO `accommodations` (`accom_id`, `title`, `location`, `description`, `rating`, `votes`, `checkin`, `checkout`, `path_to_image`, `user_id`) VALUES
+(2, 'Test', 'Test location', 'This is really a test.      	      	', 0, 0, '01:00:00', '05:00:00', '', 19),
+(3, 'Test_2', 'Test_2 loc', 'This is the second test actually!      	', 0, 0, '13:37:00', '23:00:00', '', 20);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accom_registrations`
+-- Table structure for table `accom_rentals`
 --
 
-CREATE TABLE `accom_registrations` (
-  `registration_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `accom_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `descriptions`
---
-
-CREATE TABLE `descriptions` (
-  `descr_id` int(11) NOT NULL,
-  `description` text COLLATE utf8_bin
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rents`
---
-
-CREATE TABLE `rents` (
+CREATE TABLE `accom_rentals` (
   `rent_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `accom_id` int(11) NOT NULL,
@@ -87,10 +73,10 @@ CREATE TABLE `rents` (
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `username` varchar(16) COLLATE utf8_bin NOT NULL,
-  `password` varchar(40) COLLATE utf8_bin NOT NULL,
+  `password` varchar(60) COLLATE utf8_bin NOT NULL,
   `firstname` varchar(25) COLLATE utf8_bin NOT NULL,
   `lastname` varchar(25) COLLATE utf8_bin NOT NULL,
-  `path_to_avatar` varchar(100) COLLATE utf8_bin NOT NULL,
+  `path_to_avatar` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT 'pictures\\avatars\\generic-avatar.png',
   `email` varchar(50) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -99,40 +85,24 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `firstname`, `lastname`, `path_to_avatar`, `email`) VALUES
-(1, 'klido', 'admin1234', 'nikos', 'klido', '', ''),
-(2, 'deluzional', 'kobolobo', 'kwstis', 'anifas', '', ''),
-(13, 'karaboum', '123456', 'niaa', 'oyyy', '', 'fia@fake.com'),
-(14, 'nikoylai', '123456', 'ffdafd', 'adfdsf', '', 'asf@');
+(19, 'klido', '$2y$10$FkD2tTYYSt6xBlj4cI8sRuEaKcP6qf9L4aOFGS5Uzi7ebOOdRoQW.', 'nikos', 'kouniabella', 'pictures\\avatars\\generic-avatar.png', 'koun@mail.com'),
+(20, 'delusional', '$2y$10$N8GPSCx1uWy/em64QKmop.G1fVrTjCymxPYemsK0k50LaH0WfMHVG', 'Kotsos', 'Lucifer', 'pictures\\avatars\\generic-avatar.png', 'lucy@gmail.com');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `accommodation`
+-- Indexes for table `accommodations`
 --
-ALTER TABLE `accommodation`
+ALTER TABLE `accommodations`
   ADD PRIMARY KEY (`accom_id`),
-  ADD KEY `fk_description_id` (`descr_id`);
+  ADD KEY `fk_user_id` (`user_id`);
 
 --
--- Indexes for table `accom_registrations`
+-- Indexes for table `accom_rentals`
 --
-ALTER TABLE `accom_registrations`
-  ADD PRIMARY KEY (`registration_id`),
-  ADD KEY `fk_registr_userid` (`user_id`) USING BTREE,
-  ADD KEY `fk_registr_accomid` (`accom_id`);
-
---
--- Indexes for table `descriptions`
---
-ALTER TABLE `descriptions`
-  ADD PRIMARY KEY (`descr_id`);
-
---
--- Indexes for table `rents`
---
-ALTER TABLE `rents`
+ALTER TABLE `accom_rentals`
   ADD PRIMARY KEY (`rent_id`),
   ADD KEY `fk_rent_userid` (`user_id`),
   ADD KEY `fk_rent_accomid` (`accom_id`);
@@ -149,51 +119,32 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `accommodation`
+-- AUTO_INCREMENT for table `accommodations`
 --
-ALTER TABLE `accommodation`
-  MODIFY `accom_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `accom_registrations`
---
-ALTER TABLE `accom_registrations`
-  MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `descriptions`
---
-ALTER TABLE `descriptions`
-  MODIFY `descr_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `accommodations`
+  MODIFY `accom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `accommodation`
+-- Constraints for table `accommodations`
 --
-ALTER TABLE `accommodation`
-  ADD CONSTRAINT `fk_description_id` FOREIGN KEY (`descr_id`) REFERENCES `descriptions` (`descr_id`);
+ALTER TABLE `accommodations`
+  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
--- Constraints for table `accom_registrations`
+-- Constraints for table `accom_rentals`
 --
-ALTER TABLE `accom_registrations`
-  ADD CONSTRAINT `fk_registr_accomid` FOREIGN KEY (`accom_id`) REFERENCES `accommodation` (`accom_id`),
-  ADD CONSTRAINT `fk_registr_userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `rents`
---
-ALTER TABLE `rents`
-  ADD CONSTRAINT `fk_rent_accomid` FOREIGN KEY (`accom_id`) REFERENCES `accommodation` (`accom_id`);
+ALTER TABLE `accom_rentals`
+  ADD CONSTRAINT `fk_rent_accomid` FOREIGN KEY (`accom_id`) REFERENCES `accommodations` (`accom_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

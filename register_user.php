@@ -1,63 +1,67 @@
 <?php
-require_once 'core/init.php';
+require('core/init.php');
+
 //check if form is submitted
-if(Input::postDataExist()){
+if(Input::postDataExist()) {
   $validation = new Validation();
   $validation->check($_POST,array(
     'username' => array(
-      'required'=>true,
-      'min' =>4,
-      'max' =>16,
-      'unique' => 'users'
+      'required' => true,
+      'min'      => 4,
+      'max'      => 16,
+      'unique'   => 'users'
     ),
-
     'password' => array(
       'required' => true,
-      'min'     => 6
+      'min'      => 6
     ),
     'password_again' => array(
       'required' => true,
       'matches'  => 'password'
     ),
     'firstname' => array(
-      'required'=>true,
-      'min' =>2,
-      'max' =>25,
+      'required' => true,
+      'min'      => 2,
+      'max'      => 25,
     ),
     'lastname' => array(
-      'required'=>true,
-      'min' =>2,
-      'max' =>25,
+      'required' => true,
+      'min'      => 2,
+      'max'      => 25,
     ),
     'email' => array(
-      'unique' => 'users',
-      'required' =>true
+      'unique'     => 'users',
+      'required'   => true,
+      'valid_mail' => true
     ),
   ));
-  if($validation->passed()){
+
+  if($validation->passed()) {
     $user  = escape($_POST['username']);
-    $pass  = escape($_POST['password']);
+    // store hashed password
+    $pass  = Password::hash(escape($_POST['password']));
     $first = escape($_POST['firstname']);
     $last  = escape($_POST['lastname']);
     $mail  = escape($_POST['email']);
 
     $usr = new User();
-    $usr->createUser('users',array(
-                    'username'=>&$user,
-                    'password'=>&$pass,
-                    'firstname'=>&$first,
-                    'lastname'=>&$last,
-                    'email' =>&$mail),'sssss');
+    $usr->createUser(array(
+                      'username'  => &$user,
+                      'password'  => &$pass,
+                      'firstname' => &$first,
+                      'lastname'  => &$last,
+                      'email'     => &$mail),
+                    'sssss');
     header('Location:login.php');
     exit();
-
   }else{ //Validation not passed
-    foreach($validation->errors() as $error){
+    foreach($validation->errors() as $error) {
       echo "Error : {$error}</br>";
     }
   }
+
 }
- ?>
+?>
 
 <!DOCTYPE html>
 <html lang="el">
@@ -93,7 +97,7 @@ if(Input::postDataExist()){
 			<label class="required">
 				Email
 			</label>
-			<input type="text" placeholder="e.g. example@yourmail.com" pattern=".*@.*" name ="email" value="<?php echo escape(Input::getPost('email'))?>"required>
+			<input type="text" placeholder="e.g. example@yourmail.com"  name ="email" value="<?php echo escape(Input::getPost('email'))?>"required>
 			<br>
 			<br>
 			<button type="submit" value ="register">Submit</button>

@@ -1,10 +1,11 @@
 <?php
-include 'core/init.php';
-include 'navigation.php';
-if(!isset($_SESSION['user'])){
+require('core/init.php');
+
+if(!isset($_SESSION['user'])) {
   header('location:login.php');
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -16,11 +17,11 @@ if(!isset($_SESSION['user'])){
 	<title>My profile</title>
 </head>
 <body>
-  <?php include_once 'navigation.php';?>
+  <?php include('navigation.php');?>
 
   <div class='nav' id='profile_nav'>
     <ul>
-      <li><a class="active" id='profile_info'href='#profile_info'>Profile info</a></li>
+      <li><a class="active" id='profile_info' href='#profile_info'>Profile info</a></li>
       <li><a id='reservations' href='#reservations'>Reservations</a></li>
       <li><a id='accommodations' href='#accommodations'>My Accommodations</a></li>
       <li><a id='history' href='#history'>History</a></li>
@@ -35,7 +36,7 @@ if(!isset($_SESSION['user'])){
 
         echo '<table>';
         echo '<tr><td colspan="2"><img src="'.$data['path_to_avatar'].'"alt="Avatar" width="250" height="250"></td></tr>';
-        foreach($data as $key => $val){
+        foreach($data as $key => $val) {
           if($key == "path_to_avatar") continue;
           echo '<tr>
                   <td width="150px">'.$key.'</td>
