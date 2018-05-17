@@ -1,0 +1,49 @@
+body{
+  background-image: url("../pictures/sample_room1.jpg");
+  background-repeat: no-repeat;
+  background-color: #cccccc;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: contain;
+  height: 100%
+}
+
+.main_div{
+  height:1500px;
+  font-family:Georgia, "Times New Roman", Times, serif;
+  color:#444;
+  font-size:20px;
+}
+
+.main_div table{
+  border-spacing:10px;
+}
+
+#accom {
+  background-color:#666;
+  border-radius:20px;
+}
+
+.content{
+  height:500px;
+  margin:70px;
+  margin-top:100px;
+}
+.center{
+  display: block;
+  margin: 0 auto;
+  margin-top:15px;
+}
+
+.home_acc{
+  border-radius: 15px;
+  box-shadow:10px 10px 5px grey;
+  display: block;
+  max-width:250px;
+  max-height:250px;
+  min-width:250px;
+  min-height:250px;
+  width: auto;
+  height: auto;
+}
+}

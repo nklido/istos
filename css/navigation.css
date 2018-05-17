@@ -1,5 +1,3 @@
-
-
 #profile_nav body {
     margin: 0;
 }
@@ -21,6 +19,10 @@
       float:right;
       text-align: center;
   }
+
+#navbar img{
+  border-radius:50%;
+}
 
 #profile_nav ul {
       float:left;

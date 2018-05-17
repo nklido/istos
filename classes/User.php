@@ -53,5 +53,25 @@ class User {
       return $this->_db->getFirst();
     }
   }
+
+  function updateAvatarById($id,$path){
+    $this->_db->query("update users set path_to_avatar=? where user_id = ?",'sd',array(&$path,&$id));
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }
+  }
+
+  function getUserBookingsByAccomId($accom_id){
+    $this->_db->query('select username,firstname,lastname,checkin_date,checkout_date
+                        from users,bookings
+                        where status="active"
+                          and users.user_id = bookings.user_id
+                            and bookings.accom_id= ?','i',array(&$accom_id));
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }else{
+      return $this->_db->getResultArray();
+    }
+  }
 }
 ?>

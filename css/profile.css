@@ -1,11 +1,19 @@
-#profile_content{
+/* This will aplly to every tab in PROFILE*/
+.profile_content{
   margin-left:15%;
-  margin-top:30px;
-  padding:1px 16px;
-  height:500px;
+  padding:1px 15px;
+  height:750px;
+  font-family:Georgia, "Times New Roman", Times, serif;
+  color:#444;
 }
 
-.profile_section{
+.profile_content em{
+  color:green;
+  font-size:20px
+}
+
+/* Profile info section in PROFILE tab */
+#profile_section{
   visibility: visible;
   font-size:20px;
   margin:auto;
@@ -13,13 +21,38 @@
 }
 
 
-.profile_section td{
+#profile_section td{
   font-size: 25px;
-  font-family:Georgia, "Times New Roman", Times, serif;
-  color:#666;
-  text-shadow: 1px 1px #666;
+  text-shadow: 1px #666;
 }
 
-.profile_section img{
+#profile_section img{
   border-radius: 50%;
+  box-shadow:10px 10px 5px grey;
+  display: block;
+  max-width:250px;
+  max-height:250px;
+  min-width:250px;
+  min-height:250px;
+  width: auto;
+  height: auto;
+}
+
+
+#upload:hover{
+  cursor:pointer;
+}
+/* Accomodations section in PROFILE tab*/
+#accom_profile_section table{
+  border-spacing:5px;
+}
+
+#accom_profile_section td{
+  align:center;
+}
+
+
+#bookings_profile_section table{
+  margin:auto;
+  width:50%;
 }

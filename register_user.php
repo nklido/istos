@@ -36,6 +36,15 @@ if(Input::postDataExist()) {
     ),
   ));
 
+  if(is_uploaded_file($_FILES['avatar']['tmp_name'])){
+    $validation->check($_FILES,array(
+      'avatar' => array(
+        'file_extension'=> array('jpg','png'),
+        'valid_mime'    => array('image/jpeg','image/png')
+      )
+    ));
+  }
+
   if($validation->passed()) {
     $user  = escape($_POST['username']);
     // store hashed password
@@ -44,20 +53,34 @@ if(Input::postDataExist()) {
     $last  = escape($_POST['lastname']);
     $mail  = escape($_POST['email']);
 
+    #default path
+    $avatar = 'pictures/avatars/generic-avatar.png';
+    if(is_uploaded_file($_FILES['avatar']['tmp_name'])){
+      #move file
+      $from = $_FILES['avatar']['tmp_name'];
+      $to   = 'pictures/avatars/'.$user.'_'.escape($_FILES['avatar']['name']);
+      if(!move_uploaded_file($from,$to)){
+        echo 'error moving file!';
+      }else{
+        $avatar = $to;
+      }
+    }
+
+
     $usr = new User();
     $usr->createUser(array(
                       'username'  => &$user,
                       'password'  => &$pass,
                       'firstname' => &$first,
                       'lastname'  => &$last,
-                      'email'     => &$mail),
-                    'sssss');
+                      'email'     => &$mail,
+                      'path_to_avatar' => &$avatar),
+                    'ssssss');
     header('Location:login.php');
     exit();
   }else{ //Validation not passed
-    foreach($validation->errors() as $error) {
-      echo "Error : {$error}</br>";
-    }
+      $validation->alertErrors();
+    
   }
 
 }
@@ -75,11 +98,13 @@ if(Input::postDataExist()) {
   <?php include 'navigation.php';?>
 	<div id="registration" class='form_div'>
 		<h1>Registration</h1>
-		<form action="#" method="POST" id="registration_form">
+		<form enctype="multipart/form-data" action="#" method="POST" id="registration_form">
 
 			<label for="username" class="required">Username</label>
 			<input type="text" placeholder="e.g. Nikos1234" id="username" name="username" value="<?php echo escape(Input::getPost('username'))?>" required>
       </br></br>
+
+      <input type="file" name="avatar" id="file_input">
 
 			<label class="required">Choose password</label>
 			<input type="password" placeholder="type password"  name ="password"required>

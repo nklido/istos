@@ -12,30 +12,56 @@ if(!isset($_SESSION['user'])) {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link href="css/profile.css" rel="stylesheet" type="text/css">
   <link href="css/navigation.css" rel="stylesheet" type="text/css">
-
-  <script type="text/javascript" src="js/profile.js"></script>
 	<title>My profile</title>
 </head>
 <body>
   <?php include('navigation.php');?>
+  <?php include('navigation_profile.php'); ?>
 
-  <div class='nav' id='profile_nav'>
-    <ul>
-      <li><a class="active" id='profile_info' href='#profile_info'>Profile info</a></li>
-      <li><a id='reservations' href='#reservations'>Reservations</a></li>
-      <li><a id='accommodations' href='#accommodations'>My Accommodations</a></li>
-      <li><a id='history' href='#history'>History</a></li>
-    </ul>
-	</div>
-  <div id="profile_content">
-    <div  class='profile_section' id="profile_info_content">
+  <div class="profile_content">
+    <div  id='profile_section'>
       <?php
+
+        if(isset($_FILES['avatar'])){
+          $vld = new Validation();
+          $vld->check($_FILES,array(
+            'avatar' => array(
+              'file_extension'=> array('jpg','png'),
+              'valid_mime'    => array('image/jpeg','image/png')
+            )
+          ));
+
+          if($vld->passed()) {
+            $from = $_FILES['avatar']['tmp_name'];
+            $to   = 'pictures/avatars/'.$_SESSION['user'].'_'.escape($_FILES['avatar']['name']);
+            if(!move_uploaded_file($from,$to)){
+              echo 'error moving file!';
+            }else{
+              $usr = new User();
+              $usr->updateAvatarById($_SESSION['user_id'],$to);
+            }
+
+          }else{ //Validation not passed
+            foreach($vld->errors() as $error) {
+              echo "Error : {$error}</br>";
+            }
+          }
+        }
         $usr = new User();
         $data = $usr->getUser(array('username','firstname','lastname','path_to_avatar','email'),'s',array('username' => $_SESSION['user']));
         $data = $data[0];
 
         echo '<table>';
-        echo '<tr><td colspan="2"><img src="'.$data['path_to_avatar'].'"alt="Avatar" width="250" height="250"></td></tr>';
+        echo '<tr>
+                <td colspan="2">
+                  <img src="'.$data['path_to_avatar'].'"alt="Avatar">
+                  <form enctype="multipart/form-data" action="#"  id="upload_form" method="POST">
+                    <input type="file" name="avatar" id="file_input">
+                    <button type="submit">submit</button>
+                  <form>
+                </td>
+              </tr>';
+
         foreach($data as $key => $val) {
           if($key == "path_to_avatar") continue;
           echo '<tr>
@@ -45,17 +71,10 @@ if(!isset($_SESSION['user'])) {
         }
         echo '</table>';
       ?>
-      </table>
     </div>
-
-    <!--
-    <div class='profile_section' id="reservations_content">RESERVATIONS</div>
-    <div class='profile_section' id="accommodations_content">Accommodations</div>
-    <div class='profile_section' id="history_content">HISTORY</div>
-  -->
   </div>
-
   <hr>
+
 	<div id="footer">
 		<p>
 		</p>
