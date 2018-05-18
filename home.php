@@ -1,23 +1,51 @@
 <?php
 require('core/init.php');
-?>
+$accom = new Accommodation();
 
+if (isset($_GET['location'])){
+	$loc = escape($_GET['location']);
+	echo $loc;
+	if($loc !='show all'){
+		$data = $accom->getAccomByLocation($loc);
+	}else{
+		header('location:home.php');
+	}
+}else{
+	$data = $accom->getAccommodations();
+}
+
+
+$locations = $accom->getExistingLocations();
+$search = '<form method="GET"><select id="location_select"><option value="all">show all</option>';
+foreach($locations as $index => $location){
+	if(isset($loc) && $loc == $location['location']){
+		$selected = 'selected';
+	}else {$selected='';}
+ 	$search.= <<< EOR
+	<option value="{$location['location']}" {$selected}>{$location['location']}</option>
+EOR;
+}
+$search .='</select></form>';
+?>
 <!DOCTYPE html>
 <html lang="el">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link href="css/navigation.css" rel="stylesheet" type="text/css">
 	<link href="css/home.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="js/location-select.js"></script>
 	<title>Index</title>
 </head>
 <body>
-	<?php include('navigation.php');?>
+
+	<?php
+	echo  $search;
+	include('navigation.php');
+	?>
 	<div class="main_div">
 		<div class="content">
 			<h2>Accomodations</h2>
 			<?php
-				$Acc = new Accommodation();
-				$data = $Acc->getAccommodations();
 				echo '<table><tr>';
 				if(isset($data)){
 					foreach($data as $index=> $accomodation){

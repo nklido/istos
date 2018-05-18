@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			input = ratingForm.querySelector('input[type="range"]'),
 			size = input.getAttribute('max'),
 			currentValue = input.value;
-			
+
 	ratingWidget = document.createElement('span');
 	ratingWidget.className = 'rating-widget';
 	for(var j=size; j>0; j--) {

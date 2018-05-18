@@ -8,6 +8,19 @@ body{
   height: 100%
 }
 
+#location_select{
+  position: fixed;
+  margin-left: 30%;
+  z-index:1;
+  color:#222;
+  background: lightGray;
+  width: 240px;
+  height:25px;
+  border-radius: 20px;
+  font-family:Georgia, "Times New Roman", Times, serif;
+  color:#444;
+}
+
 .main_div{
   height:1500px;
   font-family:Georgia, "Times New Roman", Times, serif;

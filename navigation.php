@@ -18,7 +18,7 @@ if(isset($_SESSION['user'])) {
 	echo '<li><a '.$active['register_accom'].' href="register_accom.php">Add accomodation</a></li>';
 }else{
 	echo "<li><a ".$active['login']."  id='login' href='login.php'>Login</a></li>";
-  	echo "<li><a ".$active['register_user']."  id='register_user' href='register_user.php'>Register</a></li>";
+  echo "<li><a ".$active['register_user']."  id='register_user' href='register_user.php'>Register</a></li>";
 }
 echo '<li><a '.$active['home'].' id="home" href="home.php">Home</a></li>';
 echo "</ul></div><br/></br>";

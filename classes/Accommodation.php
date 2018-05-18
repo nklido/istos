@@ -101,13 +101,22 @@ class Accommodation {
     }
   }
 
+  function getExistingLocations(){
+    $this->_db->query("SELECT location FROM accommodations group by location");
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }else{
+      return $this->_db->getResultArray();
+    }
+  }
+
 
   function getAccomByLocation($location) {
     $this->_db->query('select * from accommodations where location = ?','s',array(&$location));
     if($this->_db->error()) {
       echo $this->_db->getErrorDescr();
     }else{
-      return $this->_db->getFirst();
+      return $this->_db->getResultArray();
     }
   }
 }
