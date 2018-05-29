@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2018 at 07:08 PM
+-- Generation Time: May 29, 2018 at 02:09 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -53,7 +53,8 @@ INSERT INTO `accommodations` (`accom_id`, `title`, `location`, `description`, `r
 (25, 'Bad accommodation', 'Xaidari', 'Very far away from. Not that good very expensive      	', 1, 0, '00:01:00', '00:10:00', 'pictures/accommodations/delusional_room5.jpg', 32),
 (26, 'Not that bad Accommodation', 'Crete', 'Not that expensive, close to airport if you need to leave for any reason', 1, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room6.jpg', 32),
 (27, 'Pretty normal Accommodation', 'Crete', 'Center, close to shops, very bad view but no expensive so no problem yes?       	', 1, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room7.jpg', 32),
-(28, 'Decent Accommodation', 'Crete', 'Crete very good place, very very decent room.      	', 1, 0, '12:00:00', '09:00:00', 'pictures/accommodations/delusional_room8.jpg', 32);
+(28, 'Decent Accommodation', 'Crete', 'Crete very good place, very very decent room.      	', 5, 1, '12:00:00', '09:00:00', 'pictures/accommodations/delusional_room8.jpg', 32),
+(29, 'Angelinas', 'kos', 'Very good, no joke   	', 2.5, 2, '12:00:00', '12:30:00', 'pictures/accommodations/buiz3l_angelinas1.jpg', 34);
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,11 @@ INSERT INTO `bookings` (`rent_id`, `user_id`, `accom_id`, `checkin_date`, `check
 (19, 32, 24, '2018-05-17', '2018-05-18', 'completed'),
 (20, 32, 21, '2018-05-19', '2018-05-23', 'active'),
 (21, 33, 21, '2018-06-01', '2018-06-09', 'active'),
-(22, 31, 28, '2018-05-17', '2018-05-18', 'active');
+(22, 31, 28, '2018-05-17', '2018-05-18', 'completed'),
+(23, 34, 24, '2018-08-12', '2018-08-15', 'completed'),
+(24, 31, 29, '2018-05-25', '2018-05-30', 'completed'),
+(25, 35, 23, '2018-05-29', '2018-05-31', 'completed'),
+(26, 31, 29, '2018-05-30', '2018-05-31', 'completed');
 
 -- --------------------------------------------------------
 
@@ -87,17 +92,19 @@ INSERT INTO `bookings` (`rent_id`, `user_id`, `accom_id`, `checkin_date`, `check
 --
 
 CREATE TABLE `ratings` (
-  `user_id` int(11) NOT NULL,
-  `accom_id` int(11) NOT NULL,
-  `rating` enum('1','2','3','4','5') COLLATE utf8_bin NOT NULL
+  `rent_id` int(11) NOT NULL,
+  `rating` enum('1','2','3','4','5') COLLATE utf8_bin NOT NULL,
+  `comment` text COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `ratings`
 --
 
-INSERT INTO `ratings` (`user_id`, `accom_id`, `rating`) VALUES
-(32, 24, '4');
+INSERT INTO `ratings` (`rent_id`, `rating`, `comment`) VALUES
+(22, '5', ''),
+(24, '4', 'Very good enjoy very best, will come again for sure this was amazing very very good indeed it is '),
+(26, '1', '');
 
 -- --------------------------------------------------------
 
@@ -122,7 +129,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `password`, `firstname`, `lastname`, `path_to_avatar`, `email`) VALUES
 (31, 'klido', '$2y$10$a.Djx4MweGahvdnuXaw.fuHwAZT.JZ/Ax2iAZ6OEpxkNnQvwNsO9m', 'Nikos', 'Plebeloper', 'pictures/avatars/klido_kurotsuchi_mayuri.jpg', 'nikods@kappas.com'),
 (32, 'delusional', '$2y$10$2EL2VQM51nCg/gvEFigSpOGfQg4BNQ4bZCFABehpLEHOmH99ffUUS', 'delu', 'zion', 'pictures/avatars/generic-avatar.png', 'delu@zion.com'),
-(33, 'hckzen', '$2y$10$uTeIqjCYLKeVhbtDlH5Eze0utm/Q3fnq.A92IdbqPDrfxTiiyIwXG', 'HC', 'ZEN', 'pictures/avatars/hckzen_kyro.jpg', 'zen10@gmis.com');
+(33, 'hckzen', '$2y$10$uTeIqjCYLKeVhbtDlH5Eze0utm/Q3fnq.A92IdbqPDrfxTiiyIwXG', 'HC', 'ZEN', 'pictures/avatars/hckzen_kyro.jpg', 'zen10@gmis.com'),
+(34, 'buiz3l', '$2y$10$50O3mYYptHydrsb7ToJ95OXWf3oPgxWbEe5ALn9gDsLuHFFg4eNzu', 'manolis', 'ps', 'pictures/avatars/generic-avatar.png', 'manolisbuizel@gmail.com'),
+(35, 'paparas', '$2y$10$KTn0pNpNpxtVpCGHFvbyheiZUnYo/U/Xb45p6wDitwNdn76WHc4Ve', 'aaa', 'aaa', 'pictures/avatars/paparas_download.jpg', 'aaa@sdas.com');
 
 --
 -- Indexes for dumped tables
@@ -147,8 +156,7 @@ ALTER TABLE `bookings`
 -- Indexes for table `ratings`
 --
 ALTER TABLE `ratings`
-  ADD PRIMARY KEY (`user_id`,`accom_id`),
-  ADD KEY `fk_rating_accomid` (`accom_id`);
+  ADD PRIMARY KEY (`rent_id`);
 
 --
 -- Indexes for table `users`
@@ -165,19 +173,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accommodations`
 --
 ALTER TABLE `accommodations`
-  MODIFY `accom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `accom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `rent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `rent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables
@@ -199,8 +207,7 @@ ALTER TABLE `bookings`
 -- Constraints for table `ratings`
 --
 ALTER TABLE `ratings`
-  ADD CONSTRAINT `fk_rating_accomid` FOREIGN KEY (`accom_id`) REFERENCES `accommodations` (`accom_id`),
-  ADD CONSTRAINT `fk_rating_userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `fk_rating_rentid` FOREIGN KEY (`rent_id`) REFERENCES `bookings` (`rent_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
