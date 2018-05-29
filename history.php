@@ -45,8 +45,8 @@ if(!isset($_SESSION['user'])) {
 										<input type="range" min="0" max="5" value="{$accomodation['rating']}" name="rating" required/>
 										</label></br>
 										<label> Leave a comment</br>
-										<textarea rows=7 cols=43 type="text" id="comment" name="comment"></textarea>
-										<input type="hidden" id="accom_id" value="{$accomodation['accom_id']}">
+										<textarea rows=7 cols=43 type="text" name="comment"></textarea>
+										<input type="hidden" name="rent" value="{$accomodation['rent_id']}">
 										</br>
 										<button type="submit" name="submit">Submit</button>
 									</form>

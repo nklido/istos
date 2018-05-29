@@ -16,14 +16,14 @@
 }
 
 
-.rating-widget a.selected,
-.rating-orange a.selected ~ a {
-	color:black;
+.rating-widget a.registered,
+.rating-widget a.registered ~ a {
+	color:orange;
 	text-shadow: 0 0 3px;
 }
 
-.rating-widget a.selected-by-me,
-.rating-widget a.selected-by-me ~ a {
+.rating-widget a.selected,
+.rating-widget a.selected ~ a {
 	color:red;
 	text-shadow: 0 0 3px;
 }

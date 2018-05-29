@@ -1,45 +1,47 @@
 document.addEventListener('DOMContentLoaded', function() {
-	var ratingForm = document.querySelector('form.rating-widget'),
-			input = ratingForm.querySelector('input[type="range"]'),
+
+	ratingForms = document.querySelectorAll('form.rating-widget')
+	for(var i=0;i<ratingForms.length;i++){
+		var ratingForm = ratingForms[i],
+			input  = ratingForm.querySelector('input[type="range"]'),
+			submit = ratingForm.querySelector('button[type="submit"]'),
 			size = input.getAttribute('max'),
-			currentValue = input.value;
+			registeredValue = input.value;
+			currentValue = 1;
 
-	ratingWidget = document.createElement('span');
-	ratingWidget.className = 'rating-widget';
-	for(var j=size; j>0; j--) {
-		var star = document.createElement('a'), // <a href />, to be focusable
-		rating = j;
-		star.href=''
-		star.rating = rating;
+		ratingWidget = document.createElement('span');
+		ratingWidget.className = 'rating-widget';
+		for(var j=size; j>0; j--) {
+			var star = document.createElement('a'), // <a href />, to be focusable
+			rating = j;
+			star.href=''
+			star.rating = rating;
 
-					if(j == currentValue){
-							star.classList.add('selected');
-							star.current   += j
-					}
+			if(j == registeredValue){
+				star.classList.add('registered');
+			}
+			if(j == 1){
+				star.classList.add('selected');
+				star.current = j
+			}
+			ratingWidget.appendChild(star);
 
+			star.addEventListener('click', function(evt){
+				var sel = document.getElementsByClassName('selected')[0];
+				sel.classList.remove('selected');
+				this.classList.add('selected');
+				evt.preventDefault();
+			}, false);
+		}
 
-		ratingWidget.appendChild(star);
+			submit.addEventListener('click',function(evt){
+				evt.preventDefault();
+				var sel = document.getElementsByClassName('selected')[0];
+				rate(this,sel.rating);
+			}, false);
 
-		star.addEventListener('click', function(evt){
-			var sel = document.getElementsByClassName('selected')[0];
-			sel.classList.remove('selected');
-			this.classList.add('selected');
-			evt.preventDefault();
-
-		}, false);
-	}
-
-
-
-	var submit_button = ratingForm.querySelector('button[type=submit]')
-	submit_button.addEventListener('click',function(evt){
-		evt.preventDefault();
-		var sel = document.getElementsByClassName('selected')[0];
-		rate(this,sel.rating);
-	}, false);
-
-	input.parentNode.replaceChild(ratingWidget, input); //replace input with widget
-
+			input.parentNode.replaceChild(ratingWidget, input); //replace input with widget
+		}//end for loop
 });
 
 
@@ -52,14 +54,15 @@ function rate(submit,rating) {
 		form = form.parentNode;
 	}
 
-	console.log(submit)
 	var method = form.method;
+
+	console.log(form)
 
 
 	var data = "data=" + (JSON.stringify({
 		'rating':rating,
-		'accom_id':document.getElementById('accom_id').value,
-		'comment':document.getElementById('comment').value
+		'rent_id':form.querySelector('input[name=rent]').value,
+		'comment':form.querySelector('textarea[name=comment]').value
 	}))
 
 	xhr.open(method, form.action + (method.toUpperCase() == 'GET'? '?' + data : ''), true);
@@ -71,6 +74,11 @@ function rate(submit,rating) {
             //form.querySelector('img').remove()
 			if(xhr.status == 200 || xhr.status == 304) {
 				console.log("response "+xhr.responseText);
+				if(xhr.response!=-1){
+					alert('Voting registered')
+				}else{
+					alert('You have already voted!')
+				}
 			}
 			else {
 				alert('Error ' + xhr.status + ': ' + xhr.statusText);

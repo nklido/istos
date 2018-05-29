@@ -33,6 +33,15 @@ class Accommodation {
     }
   }
 
+  function getAccomByRentId($id) {
+    $this->_db->query('select * from accommodations,bookings where rent_id = ? and accommodations.accom_id = bookings.accom_id','d',array(&$id));
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }else{
+      return $this->_db->getFirst();
+    }
+  }
+
   function getAccomsByUserId($id) {
     $this->_db->query('select * from accommodations where user_id = ?','d',array(&$id));
     if($this->_db->error()) {
@@ -101,8 +110,37 @@ class Accommodation {
     }
   }
 
+  function updateRatings($rent_id,$rating){
+    $accom = $this->getAccomByRentId($rent_id);
+    $id = $accom['accom_id'];
+    echo $id;
+    $sum = $accom['votes'] * $accom['rating'];
+    $votes = $accom['votes']+1;   //add votes by 1
+    $newRating = ($sum+$rating)/($votes);     //calculate new average
+    $this->_db->query("update accommodations set votes=? ,rating=?  where accom_id= ?",'idi',array(&$votes,&$newRating,&$id));
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }
+  }
+
   function getExistingLocations(){
     $this->_db->query("SELECT location FROM accommodations group by location");
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }else{
+      return $this->_db->getResultArray();
+    }
+  }
+
+  function getRatingsById($accom_id){
+    $this->_db->query(" SELECT users.username as user ,ratings.rating as rating,ratings.comment as comment
+                        FROM accommodations,bookings,ratings,users
+                        WHERE accommodations.accom_id= ?
+                        AND   users.user_id     = bookings.user_id
+                        AND   bookings.accom_id = accommodations.accom_id
+                        AND   bookings.rent_id  = ratings.rent_id
+                        AND   ratings.comment <>''",
+                          'i',array(&$accom_id));
     if($this->_db->error()) {
       echo $this->_db->getErrorDescr();
     }else{

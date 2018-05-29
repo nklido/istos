@@ -22,11 +22,11 @@ if(Input::postDataExist()) {
   if($validation->authenticate($_POST)) {
     $user = new User();
     $user_data = $user->getUserByUsername(escape($_POST['username']));
-    $_SESSION['user'] = $_POST['username'];
-    $_SESSION['user_id'] = $user_data['user_id'];
+    $_SESSION['user']           = $_POST['username'];
+    $_SESSION['user_id']        = $user_data['user_id'];
     $_SESSION['path_to_avatar'] = $user_data['path_to_avatar'];
     $_SESSION['firstname']      = $user_data['firstname'];
-    $_SESSION['lastname']      = $user_data['lastname'];
+    $_SESSION['lastname']       = $user_data['lastname'];
 
     echo '<script type="text/javascript"> window.open("home.php","_self");</script>';
   }else{

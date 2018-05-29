@@ -69,6 +69,7 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link href="css/navigation.css" rel="stylesheet" type="text/css">
+  <link href="css/accommodation.css" rel="stylesheet" type="text/css">
 	<title>Accomodations</title>
 </head>
 <body>
@@ -123,8 +124,38 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
             <button type="submit" name="book_form">Submit</button>
           </form></div>';
       }
+
+      $comment_section = '<div id="comment_section"><h2>Comments</h2>';
+      $accom = new Accommodation();
+      $comments = $accom->getRatingsById($data['accom_id']);
+      foreach($comments as $i => $rating){
+        $user_rating = round($rating['rating']);
+        $user_stars ='';
+        for($i=5;$i>=1;$i--){
+          if($user_rating==$i){
+            $user_stars.='<a class="registered"></a>';
+          }else{
+            $user_stars.='<a></a>';
+          }
+        }
+        $comment_section.="<div><b>User {$rating['user']} wrote</b></br><div class='stars'>{$user_stars}</div></br><i>{$rating['comment']}</i></div></br>";
+      }
+      $comment_section.='</div>';
+
+      $rating = round($data['rating']);
+      $stars ='';
+      for($i=5;$i>=1;$i--){
+        if($rating==$i){
+          $stars.='<a class="registered"></a>';
+        }else{
+          $stars.='<a></a>';
+        }
+      }
       $str = <<< EOR
       <table>
+        <tr>
+          <th>{$data['title']}</th>
+        </tr>
         <tr>
           <td>
             <img class='accom_img' src="{$data['path_to_image']}" alt="Avatar" width='256' heght='256'>
@@ -132,8 +163,11 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
           </td>
         </tr>
         <tr>
-          <td>{$data['title']}</td>
+          <td><div class='stars'>{$stars}</div></td>
         </tr>
+        <tr>
+          <td>Votes : {$data['votes']} </td>
+        <tr>
         <tr>
           <td>{$data['description']}</td>
         </tr>
@@ -150,8 +184,8 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
 EOR;
       echo $str;
       echo $rent_form;
+      echo $comment_section;
 ?>
-
     </div>
   </div>
 	<div id="footer">

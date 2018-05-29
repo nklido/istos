@@ -8,7 +8,7 @@ if(isset($_SESSION['user'])){
     $data = json_decode($_POST['data'],true);
     $_POST['rating']   = escape($data['rating']);
     $_POST['comment']  = escape($data['comment']) ?? ''; //try comment, if is null go with ''
-    $_POST['accom_id'] = escape($data['accom_id']);
+    $_POST['rent_id'] = escape($data['rent_id']);
     $vld = new Validation();
     $vld->check($_POST,array(
       'rating' => array(
@@ -21,21 +21,23 @@ if(isset($_SESSION['user'])){
     ));
     if($vld->passed()){
       $comment  = $_POST['comment'];
-      $accom_id = $_POST['accom_id'];
+      $rent_id =  $_POST['rent_id'];
       $rating   = $_POST['rating'];
 
       $db = Database::getInstance();
       $db->insert('ratings',array(
-        'user_id'  => &$user_id,
-        'accom_id' => &$accom_id,
+        'rent_id'  => &$rent_id,
         'rating'   => &$rating
-      ),'iis');
+      ),'is');
       if(!$db->error()){
-        echo 'rating registered';
+        $accmdb = new Accommodation();
+        $accmdb->updateRatings($rent_id,$rating);
+        echo 'ok';
       }else{
-        echo $db->getErrorDescr();
+        echo -1;
+        //echo $db->getErrorDescr();
       }
-    }else{
+    }else{ //
       $vld->echoErrors();
     }
   }
