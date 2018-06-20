@@ -61,8 +61,17 @@ class User {
     }
   }
 
+  function getAvatarPath($id) {
+    $this->_db->query('select path_to_avatar from users where user_id = ?','i',array(&$id));
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }else{
+      return $this->_db->getFirst()['path_to_avatar'];
+    }
+  }
+
   function getUserBookingsByAccomId($accom_id){
-    $this->_db->query('select username,firstname,lastname,checkin_date,checkout_date
+    $this->_db->query('select rent_id,username,firstname,lastname,checkin_date,checkout_date
                         from users,bookings
                         where status="active"
                           and users.user_id = bookings.user_id

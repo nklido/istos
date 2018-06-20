@@ -29,6 +29,8 @@ if(!isset($_SESSION['user'])) {
 					foreach($data as $index=> $accomodation){
 						if($index%3	==0)
 							echo '<tr>';
+						$checkin  = date('d/F/Y',strtotime($accomodation['checkin_date']));
+						$checkout = date('d/F/Y',strtotime($accomodation['checkout_date']));
 						$str = <<<EOF
 						<td>
 							<table>
@@ -36,7 +38,12 @@ if(!isset($_SESSION['user'])) {
 									<td width='50%'><a href="accommodation.php?id={$accomodation['accom_id']}"><img src="{$accomodation['path_to_image']} "alt="Avatar" width="350" height="350"></td>
 								</tr>
 								<tr>
-									<td align="center"><i>{$accomodation['title']}</i></td>
+									<td align="center"><i>{$accomodation['title']}</i></td
+								</tr>
+								<tr>
+									<td align="center">
+										<small>(<b>from</b> {$checkin} <b>to</b> {$checkout})</small>
+									</td>
 								</tr>
 								<tr>
 									<td>

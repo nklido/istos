@@ -42,8 +42,15 @@ class Accommodation {
     }
   }
 
+  function completeBooking($rentid){
+    $this->_db->query('update bookings set status="completed" where rent_id = ?  ','i',array(&$rentid));
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }
+  }
+
   function getAccomsByUserId($id) {
-    $this->_db->query('select * from accommodations where user_id = ?','d',array(&$id));
+    $this->_db->query('select * from accommodations where user_id = ?','i',array(&$id));
     if($this->_db->error()) {
       echo $this->_db->getErrorDescr();
     }else{
@@ -145,6 +152,15 @@ class Accommodation {
       echo $this->_db->getErrorDescr();
     }else{
       return $this->_db->getResultArray();
+    }
+  }
+
+  function getImagePath($id) {
+    $this->_db->query('select path_to_image from accommodations where accom_id = ?','i',array(&$id));
+    if($this->_db->error()) {
+      echo $this->_db->getErrorDescr();
+    }else{
+      return $this->_db->getFirst()['path_to_image'];
     }
   }
 

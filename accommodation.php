@@ -29,11 +29,13 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
         'checkin_date'     => array(
           'valid_date'     => true,
           'before_date'    => 'checkout_date',
-          'available_date' => array($accom,$accom_id)
+          'available_date' => array($accom,$accom_id),
+          'required' => true
         ),
         'checkout_date' => array(
           'valid_date' => true,
-          'available_date' => array($accom,$accom_id)
+          'available_date' => array($accom,$accom_id),
+          'required' => true
         )
       ));
 
@@ -50,9 +52,6 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
           'checkout_date' =>&$checkout
         ),'iiss');
 
-        if($added){
-          echo "OK";
-        }
 
       }else{
         $vld->alertErrors();
@@ -63,7 +62,6 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
   header('location:home.php');
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -94,6 +92,13 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
             echo 'error moving file!';
           }else{
             $accom = new Accommodation();
+
+            $path = $accom->getImagePath($data['accom_id']);
+            if(isset($path)){
+              if(strcmp($path,"pictures/accommodations/not_available.jpg") && strcmp($to,$path)){
+                unlink($path);
+              }
+            }
             $accom->updateImageById($data['accom_id'],$to);
             $data['path_to_image']=$to;
           }
@@ -114,7 +119,7 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
          </form>';
       }else{ //Only users who don't own  the accommodation can book it.
         $rent_form =
-          '<div>
+          '<div id="booking_form">
           <h2>Book this accommodation</h2>
           <form method="POST" action="">
             <label>Checking Date
@@ -124,21 +129,23 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
             <button type="submit" name="book_form">Submit</button>
           </form></div>';
       }
-
+      echo $rent_form;
       $comment_section = '<div id="comment_section"><h2>Comments</h2>';
       $accom = new Accommodation();
       $comments = $accom->getRatingsById($data['accom_id']);
-      foreach($comments as $i => $rating){
-        $user_rating = round($rating['rating']);
-        $user_stars ='';
-        for($i=5;$i>=1;$i--){
-          if($user_rating==$i){
-            $user_stars.='<a class="registered"></a>';
-          }else{
-            $user_stars.='<a></a>';
+      if(!empty($comments)){
+        foreach($comments as $i => $rating){
+          $user_rating = round($rating['rating']);
+          $user_stars ='';
+          for($i=5;$i>=1;$i--){
+            if($user_rating==$i){
+              $user_stars.='<a class="registered"></a>';
+            }else{
+              $user_stars.='<a></a>';
+            }
           }
+          $comment_section.="<div><b>User {$rating['user']} wrote</b></br><div class='stars'>{$user_stars}</div></br><i>{$rating['comment']}</i></div></br>";
         }
-        $comment_section.="<div><b>User {$rating['user']} wrote</b></br><div class='stars'>{$user_stars}</div></br><i>{$rating['comment']}</i></div></br>";
       }
       $comment_section.='</div>';
 
@@ -183,7 +190,7 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
       </table>
 EOR;
       echo $str;
-      echo $rent_form;
+
       echo $comment_section;
 ?>
     </div>
@@ -193,4 +200,7 @@ EOR;
 		</p>
 	</div>
 </body>
+<?php
+if(isset($added)) echo "<script language='javascript'>alert('Booking successfully registered!!!');</script>";
+?>
 </html>

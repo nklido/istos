@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2018 at 02:09 PM
+-- Generation Time: Jun 20, 2018 at 10:58 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -33,7 +33,7 @@ CREATE TABLE `accommodations` (
   `title` varchar(50) COLLATE utf8_bin NOT NULL,
   `location` varchar(25) COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin,
-  `rating` float DEFAULT '1',
+  `rating` float DEFAULT '0',
   `votes` int(11) DEFAULT '0',
   `checkin` time NOT NULL,
   `checkout` time NOT NULL,
@@ -46,15 +46,15 @@ CREATE TABLE `accommodations` (
 --
 
 INSERT INTO `accommodations` (`accom_id`, `title`, `location`, `description`, `rating`, `votes`, `checkin`, `checkout`, `path_to_image`, `user_id`) VALUES
-(21, 'Good accommodation', 'Athens', 'Accommodation at athens greece very good.      	', 1, 0, '12:00:00', '00:09:00', 'pictures/accommodations/klido_room1.jpg', 31),
-(22, 'Very good accommodation', 'Athens', 'Very good accommodation athens color purple very large, very best       	', 1, 0, '09:00:00', '12:00:00', 'pictures/accommodations/klido_room2.jpg', 31),
-(23, 'The best Accommodation', 'Kos', 'Kos island, pool, sea ,water sport, breakfast the best ever.    	', 1, 0, '12:00:00', '09:00:00', 'pictures/accommodations/klido_room3.jpg', 31),
-(24, 'GODLIKE Accommodation', 'Cyprus', 'Very Very good, people like 5 star, easy gg well played      	', 1, 0, '12:00:00', '00:09:00', 'pictures/accommodations/klido_room4.jpg', 31),
-(25, 'Bad accommodation', 'Xaidari', 'Very far away from. Not that good very expensive      	', 1, 0, '00:01:00', '00:10:00', 'pictures/accommodations/delusional_room5.jpg', 32),
-(26, 'Not that bad Accommodation', 'Crete', 'Not that expensive, close to airport if you need to leave for any reason', 1, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room6.jpg', 32),
-(27, 'Pretty normal Accommodation', 'Crete', 'Center, close to shops, very bad view but no expensive so no problem yes?       	', 1, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room7.jpg', 32),
+(21, 'Good accommodation', 'Athens', 'Accommodation at athens greece very good.      	', 0, 0, '12:00:00', '00:09:00', 'pictures/accommodations/klido_room1.jpg', 31),
+(22, 'Very good accommodation', 'Athens', 'Very good accommodation athens color purple very large, very best       	', 0, 0, '09:00:00', '12:00:00', 'pictures/accommodations/klido_room2.jpg', 31),
+(23, 'The best Accommodation', 'Kos', 'Kos island, pool, sea ,water sport, breakfast the best ever.    	', 5, 1, '12:00:00', '09:00:00', 'pictures/accommodations/klido_room3.jpg', 31),
+(24, 'GODLIKE Accommodation', 'Cyprus', 'Very Very good, people like 5 star, easy gg well played      	', 4, 1, '12:00:00', '00:09:00', 'pictures/accommodations/klido_room4.jpg', 31),
+(25, 'Bad accommodation', 'Xaidari', 'Very far away from. Not that good very expensive      	', 0, 0, '00:01:00', '00:10:00', 'pictures/accommodations/delusional_room5.jpg', 32),
+(26, 'Not that bad Accommodation', 'Crete', 'Not that expensive, close to airport if you need to leave for any reason', 0, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room6.jpg', 32),
+(27, 'Pretty normal Accommodation', 'Crete', 'Center, close to shops, very bad view but no expensive so no problem yes?       	', 0, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room7.jpg', 32),
 (28, 'Decent Accommodation', 'Crete', 'Crete very good place, very very decent room.      	', 5, 1, '12:00:00', '09:00:00', 'pictures/accommodations/delusional_room8.jpg', 32),
-(29, 'Angelinas', 'kos', 'Very good, no joke   	', 2.5, 2, '12:00:00', '12:30:00', 'pictures/accommodations/buiz3l_angelinas1.jpg', 34);
+(29, 'Angelinas', 'kos', 'Very good, no joke   	', 3.5, 2, '12:00:00', '12:30:00', 'pictures/accommodations/buiz3l_angelinas1.jpg', 34);
 
 -- --------------------------------------------------------
 
@@ -77,13 +77,16 @@ CREATE TABLE `bookings` (
 
 INSERT INTO `bookings` (`rent_id`, `user_id`, `accom_id`, `checkin_date`, `checkout_date`, `status`) VALUES
 (19, 32, 24, '2018-05-17', '2018-05-18', 'completed'),
-(20, 32, 21, '2018-05-19', '2018-05-23', 'active'),
-(21, 33, 21, '2018-06-01', '2018-06-09', 'active'),
+(20, 32, 21, '2018-05-19', '2018-05-23', 'completed'),
+(21, 33, 21, '2018-06-01', '2018-06-09', 'completed'),
 (22, 31, 28, '2018-05-17', '2018-05-18', 'completed'),
 (23, 34, 24, '2018-08-12', '2018-08-15', 'completed'),
 (24, 31, 29, '2018-05-25', '2018-05-30', 'completed'),
 (25, 35, 23, '2018-05-29', '2018-05-31', 'completed'),
-(26, 31, 29, '2018-05-30', '2018-05-31', 'completed');
+(26, 31, 29, '2018-05-30', '2018-05-31', 'completed'),
+(38, 31, 29, '2018-06-19', '2018-06-20', 'active'),
+(39, 31, 29, '2018-06-22', '2018-06-23', 'active'),
+(40, 31, 29, '2018-06-24', '2018-06-25', 'active');
 
 -- --------------------------------------------------------
 
@@ -102,9 +105,11 @@ CREATE TABLE `ratings` (
 --
 
 INSERT INTO `ratings` (`rent_id`, `rating`, `comment`) VALUES
+(19, '4', 'oxi kai toso kala'),
 (22, '5', ''),
-(24, '4', 'Very good enjoy very best, will come again for sure this was amazing very very good indeed it is '),
-(26, '1', '');
+(24, '4', ''),
+(25, '5', 'ola kala\n'),
+(26, '3', '');
 
 -- --------------------------------------------------------
 
@@ -131,7 +136,8 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `firstname`, `lastname`,
 (32, 'delusional', '$2y$10$2EL2VQM51nCg/gvEFigSpOGfQg4BNQ4bZCFABehpLEHOmH99ffUUS', 'delu', 'zion', 'pictures/avatars/generic-avatar.png', 'delu@zion.com'),
 (33, 'hckzen', '$2y$10$uTeIqjCYLKeVhbtDlH5Eze0utm/Q3fnq.A92IdbqPDrfxTiiyIwXG', 'HC', 'ZEN', 'pictures/avatars/hckzen_kyro.jpg', 'zen10@gmis.com'),
 (34, 'buiz3l', '$2y$10$50O3mYYptHydrsb7ToJ95OXWf3oPgxWbEe5ALn9gDsLuHFFg4eNzu', 'manolis', 'ps', 'pictures/avatars/generic-avatar.png', 'manolisbuizel@gmail.com'),
-(35, 'paparas', '$2y$10$KTn0pNpNpxtVpCGHFvbyheiZUnYo/U/Xb45p6wDitwNdn76WHc4Ve', 'aaa', 'aaa', 'pictures/avatars/paparas_download.jpg', 'aaa@sdas.com');
+(35, 'paparas', '$2y$10$a.Djx4MweGahvdnuXaw.fuHwAZT.JZ/Ax2iAZ6OEpxkNnQvwNsO9m', 'aaa', 'aaa', 'pictures/avatars/paparas_download.jpg', 'aaa@sdas.com'),
+(36, 'p313093', '$2y$10$Tn0Q1Aiv6Wqgm0CR44sLD.Xhp4n.vsKWHtOsWlJElpDdG7xSDFYCS', 'nikos', 'klido', 'pictures/avatars/p313093_custflag.png', 'dsfsaf@gasf.com');
 
 --
 -- Indexes for dumped tables
@@ -179,13 +185,13 @@ ALTER TABLE `accommodations`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `rent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `rent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Constraints for dumped tables

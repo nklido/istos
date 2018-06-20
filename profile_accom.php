@@ -37,7 +37,7 @@ if(!isset($_SESSION['user'])) {
 						<td>
 							<table>
 								<tr>
-									<td width='50%'><a href="accommodation.php?id={$accomodation['accom_id']}"><img src="{$accomodation['path_to_image']} "alt="Avatar" width="350" height="350"></td>
+									<td colspan="2" width='50%'><a href="accommodation.php?id={$accomodation['accom_id']}"><img src="{$accomodation['path_to_image']} "alt="Avatar" width="400" height="400"></td>
 								</tr>
 								<tr>
 									<td align="center"><i>{$accomodation['title']}</i></td>
@@ -49,6 +49,9 @@ EOF;
 								 $str .= <<<EOF
 								 <tr>
 								 	<td>{$booking['username']} from {$booking['checkin_date']} to {$booking['checkout_date']}</td>
+									<td><form action="completeBooking.php" method="POST">
+											<input type='hidden' name='rentid' value='{$booking['rent_id']}'></input>
+											<button type='submit'>Complete</button></form></td>
 								 </tr>
 EOF;
 								}
@@ -64,7 +67,6 @@ EOF;
 					echo '<h2><i>You have no accomodations registered</i></h2>';
 				}
 			?>
-
 		</div>
 	</div>
 

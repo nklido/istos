@@ -38,7 +38,15 @@ if(!isset($_SESSION['user'])) {
               echo 'error moving file!';
             }else{
               $usr = new User();
+              $path = $usr->getAvatarPath($_SESSION['user_id']);
+              if(isset($path)){
+                if(strcmp($path,"pictures/avatars/generic-avatar.png") && strcmp($to,$path)){
+                  unlink($path);
+                }
+              }
               $usr->updateAvatarById($_SESSION['user_id'],$to);
+              $_SESSION['path_to_avatar'] = $to;
+              header("Refresh:0");
             }
 
           }else{ //Validation not passed

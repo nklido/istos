@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			submit = ratingForm.querySelector('button[type="submit"]'),
 			size = input.getAttribute('max'),
 			registeredValue = input.value;
-			currentValue = 1;
+
+
 
 		ratingWidget = document.createElement('span');
 		ratingWidget.className = 'rating-widget';
@@ -20,16 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
 			if(j == registeredValue){
 				star.classList.add('registered');
 			}
-			if(j == 1){
-				star.classList.add('selected');
-				star.current = j
-			}
+
 			ratingWidget.appendChild(star);
 
 			star.addEventListener('click', function(evt){
+
 				var sel = document.getElementsByClassName('selected')[0];
-				sel.classList.remove('selected');
-				this.classList.add('selected');
+				if(sel != null){
+					sel.classList.remove('selected');
+					this.classList.add('selected');
+				}else this.classList.add('selected');
 				evt.preventDefault();
 			}, false);
 		}
@@ -55,8 +56,6 @@ function rate(submit,rating) {
 	}
 
 	var method = form.method;
-
-	console.log(form)
 
 
 	var data = "data=" + (JSON.stringify({

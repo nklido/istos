@@ -27,8 +27,9 @@ if(isset($_SESSION['user'])){
       $db = Database::getInstance();
       $db->insert('ratings',array(
         'rent_id'  => &$rent_id,
-        'rating'   => &$rating
-      ),'is');
+        'rating'   => &$rating,
+        'comment'  => &$comment
+      ),'iis');
       if(!$db->error()){
         $accmdb = new Accommodation();
         $accmdb->updateRatings($rent_id,$rating);

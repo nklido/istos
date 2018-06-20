@@ -59,7 +59,7 @@ $search .='</select></form>';
 										<td><a href='accommodation.php?id={$accomodation['accom_id']}'><img class='home_acc' src="{$accomodation['path_to_image']}" alt="Avatar"></a></td>
 									</tr>
 									<tr>
-										<td align="center"><i>{$accomodation['title']}</i></td>
+										<td><i>{$accomodation['title']}</i></td>
 									</tr>
 								</table>
 							</div>
@@ -77,7 +77,6 @@ EOF;
   	<img src="pictures/home.jpg" alt="home" class="center" width="1200" height="512">
 	-->
 	</div>
-<hr>
 <div id="footer">
   <p>
   </p>

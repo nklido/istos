@@ -1,5 +1,5 @@
 body{
-  background-image: url("../pictures/sample_room1.jpg");
+  //background-image: url("../pictures/sample_room1.jpg");
   background-repeat: no-repeat;
   background-color: #cccccc;
   background-attachment: fixed;
@@ -29,11 +29,11 @@ body{
 }
 
 .main_div table{
-  border-spacing:10px;
+  border-spacing:5px;
 }
 
 #accom {
-  background-color:#666;
+  background-color:#aaa;
   border-radius:20px;
 }
 
@@ -58,4 +58,9 @@ body{
   min-height:250px;
   width: auto;
   height: auto;
+}
+
+td{
+  width:250px;
+  text-align: center;
 }
