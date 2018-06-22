@@ -7,13 +7,13 @@ GRANT ALL PRIVILEGES ON `airbnb-like_schema` . * TO 'admin'@'localhost';
 
 
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 22, 2018 at 07:35 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Host: 127.0.0.1
+-- Generation Time: Jun 23, 2018 at 12:11 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -96,7 +96,10 @@ INSERT INTO `bookings` (`rent_id`, `user_id`, `accom_id`, `checkin_date`, `check
 (39, 31, 29, '2018-06-22', '2018-06-23', 'active'),
 (40, 31, 29, '2018-06-24', '2018-06-25', 'active'),
 (41, 32, 21, '2018-06-26', '2018-06-28', 'active'),
-(42, 31, 26, '2018-06-27', '2018-06-28', 'completed');
+(42, 31, 26, '2018-06-27', '2018-06-28', 'completed'),
+(43, 37, 24, '2018-06-24', '2018-06-29', 'active'),
+(44, 37, 21, '2018-06-24', '2018-06-25', 'active'),
+(45, 37, 24, '2018-07-03', '2018-07-07', 'active');
 
 -- --------------------------------------------------------
 
@@ -149,7 +152,8 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `firstname`, `lastname`,
 (33, 'hckzen', '$2y$10$uTeIqjCYLKeVhbtDlH5Eze0utm/Q3fnq.A92IdbqPDrfxTiiyIwXG', 'HC', 'ZEN', 'pictures/avatars/hckzen_kyro.jpg', 'zen10@gmis.com'),
 (34, 'buiz3l', '$2y$10$50O3mYYptHydrsb7ToJ95OXWf3oPgxWbEe5ALn9gDsLuHFFg4eNzu', 'manolis', 'ps', 'pictures/avatars/generic-avatar.png', 'manolisbuizel@gmail.com'),
 (35, 'paparas', '$2y$10$a.Djx4MweGahvdnuXaw.fuHwAZT.JZ/Ax2iAZ6OEpxkNnQvwNsO9m', 'aaa', 'aaa', 'pictures/avatars/paparas_download.jpg', 'aaa@sdas.com'),
-(36, 'p313093', '$2y$10$Tn0Q1Aiv6Wqgm0CR44sLD.Xhp4n.vsKWHtOsWlJElpDdG7xSDFYCS', 'nikos', 'klido', 'pictures/avatars/p313093_custflag.png', 'dsfsaf@gasf.com');
+(36, 'p313093', '$2y$10$Tn0Q1Aiv6Wqgm0CR44sLD.Xhp4n.vsKWHtOsWlJElpDdG7xSDFYCS', 'nikos', 'klido', 'pictures/avatars/p313093_custflag.png', 'dsfsaf@gasf.com'),
+(37, 'johnnyDoe', '$2y$10$LNM.twAf3gc2uN/zNvlz0uszitYMv5erdxuHn8PREGKtF0Q2rDgzy', 'John', 'Doe', 'pictures/avatars/johnnyDoe_pic2.png', 'johndoe@johndoe.johndoe');
 
 --
 -- Indexes for dumped tables
@@ -197,13 +201,13 @@ ALTER TABLE `accommodations`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `rent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `rent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Constraints for dumped tables
@@ -231,3 +235,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

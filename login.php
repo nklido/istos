@@ -16,17 +16,22 @@ if(Input::postDataExist()) {
       'password' => array(
         'required' => true,
         'min'      => 6
-    )
+    ),
+      'screen_width' => array(
+        'int'       => true,
+        'positive'  => true
+      )
   ));
 
   if($validation->authenticate($_POST)) {
     $user = new User();
     $user_data = $user->getUserByUsername(escape($_POST['username']));
-    $_SESSION['user']           = $_POST['username'];
+    $_SESSION['user']           = escape($_POST['username']);
     $_SESSION['user_id']        = $user_data['user_id'];
     $_SESSION['path_to_avatar'] = $user_data['path_to_avatar'];
     $_SESSION['firstname']      = $user_data['firstname'];
     $_SESSION['lastname']       = $user_data['lastname'];
+    $_SESSION['screen_width']   = escape($_POST['screen_width']);
 
     echo '<script type="text/javascript"> window.open("home.php","_self");</script>';
   }else{
@@ -58,6 +63,7 @@ if(Input::postDataExist()) {
 
 			<label class="required">Password</label>
 			<input type="password" placeholder="Type your password"  name ="password" required>
+      <input type="hidden" id="sw" name="screen_width">
       <br/><br/>
 			<button type="submit" value ="Login">Submit</button>
 		</form>
@@ -67,5 +73,10 @@ if(Input::postDataExist()) {
 			<!-- credits και πληροφορίες copyright -->
 		</p>
 	</div>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('sw').value =window.innerWidth;
+    });
+  </script>
 </body>
 </html>

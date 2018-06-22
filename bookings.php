@@ -32,7 +32,10 @@ if(!isset($_SESSION['user'])) {
 					if($currentDate < $booked_accom['checkin_date']){
 						$days_left = date_diff(date_create($booked_accom['checkin_date']),date_create($currentDate));
 						$days_left  = $days_left->format("%R%a days");
-						$days_left_msg = "<br>There are $days_left left!!";
+						$days_left  = abs($days_left);
+
+						if($days_left==1) $days_left_msg = "<br>There is only a day left!!! ";
+						else $days_left_msg = "<br>There are ".abs($days_left)." left!!";
 					}
 
 					$str = <<<EOF

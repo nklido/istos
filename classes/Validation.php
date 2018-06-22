@@ -102,6 +102,16 @@ class Validation {
                 $this->addError("{$field} value is inappropriate");
               }
             break;
+            case 'int':
+              if(!is_int($value)){
+                $this->addError("{$field} should be an integer");
+              }
+            break;
+            case 'positive':
+              if($value<=0){
+                $this->addError("{$field} should greater than zero");
+              }
+            break;
           }
         }
       }

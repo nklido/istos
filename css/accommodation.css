@@ -29,6 +29,10 @@ table td .star{
   text-align: left;
 }
 
+.comment_text{
+  margin-left: 45px;
+}
+
 #comment_section {
   width: 600px;
 }
@@ -66,8 +70,10 @@ table th{
 
 
 #booking_form button[type="submit"]:hover{
-  background-color:#orange;
+  background-color:orange;
 }
+
+
 
 
 .stars a::after{

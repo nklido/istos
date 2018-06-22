@@ -4,8 +4,8 @@ session_start();
 $GLOBALS['config']= array(
     'mysql' => array(
         'host' => 'localhost',
-        'username' => 'root',
-        'password' => '',
+        'username' => 'admin',
+        'password' => 'admin1234',
         'db'   => 'airbnb-like_schema'
     ),
     'remember' => array(

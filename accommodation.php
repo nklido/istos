@@ -22,6 +22,8 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
   $accom = new Accommodation();
   $accom_id = escape($_GET['id']);
   $data = $accom->getAccomById($accom_id);
+  $data['checkin'] = substr($data['checkin'], 0, -3);
+  $data['checkout'] = substr($data['checkout'], 0, -3);
   if($data == null){ //check if exists, else redirect to 404
     header('location:includes/404.php');
   }
@@ -116,11 +118,7 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
             $accom->updateImageById($data['accom_id'],$to);
             $data['path_to_image']=$to;
           }
-        }else{ //Validation not passed
-          foreach($vld->errors() as $error) {
-            echo "Error : {$error}</br>";
-          }
-        }
+        }else $vld->alertErrors();
       }
 
       $rent_form = '';
@@ -153,10 +151,9 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
           $user_stars= createStarsElement($user_rating,1,5);
           $comment_section.="<div>
                               <b>User {$rating['user']} wrote</b><br>
-                              <i>{$rating['comment']}</i>
+                              <div class='comment_text'><i>{$rating['comment']}</i></div>
                               <div class='stars user'>{$user_stars}</div>
-                              </div>
-                              </br>";
+                            </div></br>";
         }
         $comment_section.='</div>';
       }else{

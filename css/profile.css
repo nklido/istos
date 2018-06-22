@@ -57,3 +57,34 @@
   margin:auto;
   width:50%;
 }
+
+button[type="submit"]{
+  background-color:#d35454;
+  border-radius: 15px;
+  color:white;
+  font-size: 14px;
+  padding-left:12px;
+  padding-right:12px;
+  padding-top: :8px;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+
+ button[type="submit"]:hover{
+  background-color:orange;
+}
+
+/*
+#active_alert:hover{
+  cursor:pointer;
+}
+
+.active_bookings{
+  visibility: visible;
+}
+
+.active_bookings{
+  visibility: hidden;
+}
+*/

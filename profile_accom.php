@@ -28,6 +28,11 @@ if(!isset($_SESSION['user'])) {
 				if($data != null){
 					echo '<h1>My Accommodations</h1>';
 					echo '<table><tr>';
+
+					$width = $_SESSION['screen_width'];
+					$width = $width - 15/100 * $width;
+					$pics_in_a_row = round($width/420)-1;// NOT GOOD
+
 					foreach($data as $index=> $accomodation){
 						$user = new User();
 						$bookings = $user->getUserBookingsByAccomId($accomodation['accom_id']);
@@ -44,15 +49,21 @@ if(!isset($_SESSION['user'])) {
 								</tr>
 EOF;
 						 if($bookings!=null){
-							 $str .= '<tr><td>Active <em>bookings!</em></td></tr>';
+							 $str .= '<tr><td id="active_alert">Active <em>bookings!</em></td></tr>';
 						 	 foreach($bookings as $bk_index => $booking){
 								 $str .= <<<EOF
-								 <tr>
-								 	<td>{$booking['username']} from {$booking['checkin_date']} to {$booking['checkout_date']}</td>
-									<td><form action="completeBooking.php" method="POST">
-											<input type='hidden' name='rentid' value='{$booking['rent_id']}'></input>
-											<button type='submit'>Complete</button></form></td>
-								 </tr>
+									 <tr>
+									 		<div class="active_bookings">
+										 	<td class="active_bookings">{$booking['username']} from {$booking['checkin_date']} to {$booking['checkout_date']}</td>
+											<td class="active_bookings">
+												<form action="completeBooking.php" method="POST">
+													<input type='hidden' name='rentid' value='{$booking['rent_id']}'></input>
+													<button type='submit'>Complete</button>
+												</form>
+											</td>
+											</div>
+									 </tr>
+
 EOF;
 								}
 						 }
