@@ -1,11 +1,19 @@
+DROP DATABASE IF EXISTS `airbnb-like_schema`;
+CREATE DATABASE `airbnb-like_schema`;
+USE `airbnb-like_schema`;
+CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin1234';
+GRANT ALL PRIVILEGES ON `airbnb-like_schema` . * TO 'admin'@'localhost';  
+
+
+
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 22, 2018 at 05:06 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- Host: localhost
+-- Generation Time: Jun 22, 2018 at 07:35 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -46,15 +54,15 @@ CREATE TABLE `accommodations` (
 --
 
 INSERT INTO `accommodations` (`accom_id`, `title`, `location`, `description`, `rating`, `votes`, `checkin`, `checkout`, `path_to_image`, `user_id`) VALUES
-(21, 'Good accommodation', 'Athens', 'Accommodation at athens greece very good.      	', 0, 0, '12:00:00', '00:09:00', 'pictures/accommodations/klido_room1.jpg', 31),
-(22, 'Very good accommodation', 'Athens', 'Very good accommodation athens color purple very large, very best       	', 0, 0, '09:00:00', '12:00:00', 'pictures/accommodations/klido_room2.jpg', 31),
-(23, 'The best Accommodation', 'Kos', 'Kos island, pool, sea ,water sport, breakfast the best ever.    	', 5, 1, '12:00:00', '09:00:00', 'pictures/accommodations/klido_room3.jpg', 31),
-(24, 'GODLIKE Accommodation', 'Cyprus', 'Very Very good, people like 5 star, easy gg well played      	', 4, 1, '12:00:00', '00:09:00', 'pictures/accommodations/klido_room4.jpg', 31),
-(25, 'Bad accommodation', 'Xaidari', 'Very far away from. Not that good very expensive      	', 0, 0, '00:01:00', '00:10:00', 'pictures/accommodations/delusional_room5.jpg', 32),
-(26, 'Not that bad Accommodation', 'Crete', 'Not that expensive, close to airport if you need to leave for any reason', 0, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room6.jpg', 32),
-(27, 'Pretty normal Accommodation', 'Crete', 'Center, close to shops, very bad view but no expensive so no problem yes?       	', 0, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room7.jpg', 32),
-(28, 'Decent Accommodation', 'Crete', 'Crete very good place, very very decent room.      	', 5, 1, '12:00:00', '09:00:00', 'pictures/accommodations/delusional_room8.jpg', 32),
-(29, 'Angelinas', 'kos', 'Very good, no joke   	', 3.5, 2, '12:00:00', '12:30:00', 'pictures/accommodations/buiz3l_angelinas1.jpg', 34);
+(21, 'Good accommodation', 'Athens', 'Accommodation at athens greece very good.       ', 5, 1, '12:00:00', '00:09:00', 'pictures/accommodations/klido_room1.jpg', 31),
+(22, 'Very good accommodation', 'Athens', 'Very good accommodation athens color purple very large, very best        ', 0, 0, '09:00:00', '12:00:00', 'pictures/accommodations/klido_room2.jpg', 31),
+(23, 'The best Accommodation', 'Kos', 'Kos island, pool, sea ,water sport, breakfast the best ever.     ', 5, 1, '12:00:00', '09:00:00', 'pictures/accommodations/klido_room3.jpg', 31),
+(24, 'GODLIKE Accommodation', 'Cyprus', 'Very Very good, people like 5 star, easy gg well played        ', 4, 1, '12:00:00', '00:09:00', 'pictures/accommodations/klido_room4.jpg', 31),
+(25, 'Bad accommodation', 'Xaidari', 'Very far away from. Not that good very expensive        ', 0, 0, '00:01:00', '00:10:00', 'pictures/accommodations/delusional_room5.jpg', 32),
+(26, 'Not that bad Accommodation', 'Crete', 'Not that expensive, close to airport if you need to leave for any reason', 3, 1, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room6.jpg', 32),
+(27, 'Pretty normal Accommodation', 'Crete', 'Center, close to shops, very bad view but no expensive so no problem yes?         ', 0, 0, '09:00:00', '12:00:00', 'pictures/accommodations/delusional_room7.jpg', 32),
+(28, 'Decent Accommodation', 'Crete', 'Crete very good place, very very decent room.        ', 5, 1, '12:00:00', '09:00:00', 'pictures/accommodations/delusional_room8.jpg', 32),
+(29, 'Angelinas', 'kos', 'Very good, no joke    ', 3.5, 2, '12:00:00', '12:30:00', 'pictures/accommodations/buiz3l_angelinas1.jpg', 34);
 
 -- --------------------------------------------------------
 
@@ -86,7 +94,9 @@ INSERT INTO `bookings` (`rent_id`, `user_id`, `accom_id`, `checkin_date`, `check
 (26, 31, 29, '2018-05-30', '2018-05-31', 'completed'),
 (38, 31, 29, '2018-06-19', '2018-06-20', 'active'),
 (39, 31, 29, '2018-06-22', '2018-06-23', 'active'),
-(40, 31, 29, '2018-06-24', '2018-06-25', 'active');
+(40, 31, 29, '2018-06-24', '2018-06-25', 'active'),
+(41, 32, 21, '2018-06-26', '2018-06-28', 'active'),
+(42, 31, 26, '2018-06-27', '2018-06-28', 'completed');
 
 -- --------------------------------------------------------
 
@@ -106,10 +116,12 @@ CREATE TABLE `ratings` (
 
 INSERT INTO `ratings` (`rent_id`, `rating`, `comment`) VALUES
 (19, '4', 'kai toso kala, para poly thoruvos no good, market very expensive!!, no money for food'),
+(20, '5', ''),
 (22, '5', 'para polu kala'),
 (24, '4', 'poly wraia :) '),
 (25, '5', 'ola kala'),
-(26, '3', 'Sooo gooddd!!!!');
+(26, '3', 'Sooo gooddd!!!!'),
+(42, '3', 'YAAAAAS!!');
 
 -- --------------------------------------------------------
 
@@ -185,7 +197,7 @@ ALTER TABLE `accommodations`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `rent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `rent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `users`

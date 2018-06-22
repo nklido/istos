@@ -22,10 +22,15 @@ html{
 table td{
   text-align:center;
   font-size:25px;
+  width: 600px;
 }
 
 table td .star{
   text-align: left;
+}
+
+#comment_section {
+  width: 600px;
 }
 
 table th{
