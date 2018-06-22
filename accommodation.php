@@ -1,6 +1,20 @@
 <?php
 require('core/init.php');
 
+function createStarsElement($user_rating,$min,$max){
+  $user_stars = '';
+  for($i=$max;$i>=$min;$i--){
+    if($user_rating==$i){
+      $user_stars.='<a class="registered"></a>';
+    }else{
+      $user_stars.='<a></a>';
+    }
+  }
+  return $user_stars;
+}
+
+
+
 $userLoggedin  = false;
 $userOwnsAccom = false;
 
@@ -136,28 +150,23 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
       if(!empty($comments)){
         foreach($comments as $i => $rating){
           $user_rating = round($rating['rating']);
-          $user_stars ='';
-          for($i=5;$i>=1;$i--){
-            if($user_rating==$i){
-              $user_stars.='<a class="registered"></a>';
-            }else{
-              $user_stars.='<a></a>';
-            }
-          }
-          $comment_section.="<div><b>User {$rating['user']} wrote</b></br><div class='stars'>{$user_stars}</div></br><i>{$rating['comment']}</i></div></br>";
+          $user_stars= createStarsElement($user_rating,1,5);
+          $comment_section.="<div>
+                              <b>User {$rating['user']} wrote</b><br>
+                              <i>{$rating['comment']}</i>
+                              <div class='stars user'>{$user_stars}</div>
+                              </div>
+                              </br>";
         }
+        $comment_section.='</div>';
+      }else{
+        $comment_section.="<i>No comments available</i>";
       }
-      $comment_section.='</div>';
+
 
       $rating = round($data['rating']);
-      $stars ='';
-      for($i=5;$i>=1;$i--){
-        if($rating==$i){
-          $stars.='<a class="registered"></a>';
-        }else{
-          $stars.='<a></a>';
-        }
-      }
+      $stars  = createStarsElement($rating,1,5);
+
       $str = <<< EOR
       <table>
         <tr>
@@ -170,11 +179,8 @@ if(isset($_GET['id'])){ //id parameter specifies which accommodation to display
           </td>
         </tr>
         <tr>
-          <td><div class='stars'>{$stars}</div></td>
+          <td class='star'>Votes : {$data['votes']}<div class='stars accom'>{$stars}</div></td>
         </tr>
-        <tr>
-          <td>Votes : {$data['votes']} </td>
-        <tr>
         <tr>
           <td>{$data['description']}</td>
         </tr>

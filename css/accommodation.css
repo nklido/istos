@@ -1,8 +1,6 @@
 
 .content{
-  display:block;
-  margin:auto;
-  width:50%;
+  margin-left:150px;
 }
 
 html{
@@ -13,10 +11,10 @@ html{
   border-radius: 15px;
   box-shadow:3px 10px 5px grey;
   display: block;
-  max-width:512px;
-  max-height:256px;
-  min-width:512px;
-  min-height:256px;
+  max-width:600px;
+  max-height:350px;
+  min-width:600px;
+  min-height:350px;
   width: auto;
   height: auto;
 }
@@ -26,6 +24,10 @@ table td{
   font-size:25px;
 }
 
+table td .star{
+  text-align: left;
+}
+
 table th{
   text-align:center;
   font-size:45px;
@@ -33,12 +35,14 @@ table th{
 
 #booking_form{
   position:fixed;
+
   margin-top:50px;
-  margin-left: 750px;
+  margin-left: 50%;
   border: 2px solid lightgray;
   padding: 50px;
   padding-bottom:150px;
   width:300px;
+  border-radius: 15px;
 }
 
 #booking_form button[type="submit"]{
@@ -65,9 +69,14 @@ table th{
   content: "\2605";
 }
 
-.stars{
-  margin:auto;
-  width:50%;
+.stars.accom{
+  display:inline;
+  width-left:auto;
+  width-right:auto;
+}
+
+.stars.user{
+  width:150px;
 }
 
 .stars a {

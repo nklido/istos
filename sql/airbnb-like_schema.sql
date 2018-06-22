@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2018 at 10:58 PM
+-- Generation Time: Jun 22, 2018 at 05:06 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -105,11 +105,11 @@ CREATE TABLE `ratings` (
 --
 
 INSERT INTO `ratings` (`rent_id`, `rating`, `comment`) VALUES
-(19, '4', 'oxi kai toso kala'),
-(22, '5', ''),
-(24, '4', ''),
-(25, '5', 'ola kala\n'),
-(26, '3', '');
+(19, '4', 'kai toso kala, para poly thoruvos no good, market very expensive!!, no money for food'),
+(22, '5', 'para polu kala'),
+(24, '4', 'poly wraia :) '),
+(25, '5', 'ola kala'),
+(26, '3', 'Sooo gooddd!!!!');
 
 -- --------------------------------------------------------
 
